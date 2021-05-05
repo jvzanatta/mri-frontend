@@ -1,0 +1,10 @@
+@use "@material/checkbox"; // Required only for data table with row selection.
+@use "@material/icon-button"; // Required only for data table with column sorting.
+@use "@material/data-table/data-table";
+
+
+.App {
+  background-color: #F4F2FF;
+  padding: 50px 100px;
+  height: 100%;
+}

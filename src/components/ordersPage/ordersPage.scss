@@ -1,0 +1,11 @@
+
+.Tabs {
+  border-bottom: 1px solid #C6C2DE;
+  margin-bottom: 20px;
+}
+
+.MuiTabs-root {
+  .MuiTab-root {
+    min-width: unset;
+  }
+}
