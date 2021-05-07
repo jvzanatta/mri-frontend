@@ -1,11 +1,11 @@
 
 export interface Customer {
-  first_name: string;
-  last_name: string;
-  address: Address;
+  firstName: string;
+  lastName: string;
+  address: CustomerAddress;
 };
 
-export interface Address {
+export interface CustomerAddress {
   line1: string;
   line2: string;
   city: string;

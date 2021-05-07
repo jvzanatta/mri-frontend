@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import orderReducer from '../components/ordersPage/ordersPageActions';
+import orderReducer from '../reducers/order/order';
 
 export const store = configureStore({
   reducer: {

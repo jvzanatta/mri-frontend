@@ -2,14 +2,14 @@
 import { Customer } from './customer';
 
 export interface Order {
-  orderNumber: number;
+  orderNumber: string;
   customer: Customer;
   orderDetails: {
     value: number;
-    date: Date;
+    date: string;
   };
   shippingDetails: {
-    date: Date;
+    date: string;
   };
   status: string;
 };
