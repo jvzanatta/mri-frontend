@@ -1,0 +1,78 @@
+
+.TableRow {
+  .order-id {
+    font-size: 14px;
+    font-weight: bold;
+    color: #25213B;
+  }
+  .order-date {
+    font-weight: 400;
+    font-size: 14px;
+    color: #6E6893;
+  }
+  .shipping-status {
+    .MuiChip-label {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+  
+      color: #4A4AFF;
+    }
+
+    .MuiSvgIcon-root {
+      color: #4A4AFF;
+      width: 12px;
+      height: 12px;
+    }
+  }
+  .shipping-date {
+    margin-top: 6px;
+    // font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #6E6893;
+  }
+  .address-line {
+    left: 53.69%;
+    right: 34.77%;
+    top: 19.25%;
+    bottom: 77.78%;
+    
+    // font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
+        
+    color: #25213B;
+  }
+  .price-value {
+    // font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    
+    text-align: right;
+    text-transform: uppercase;
+        
+    color: #25213B;
+  }
+  .price-currency {
+    margin-top: 6px;
+    // font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    
+    text-align: right;
+    letter-spacing: 0.05em;
+    
+    color: #6E6893;
+  }
+}
