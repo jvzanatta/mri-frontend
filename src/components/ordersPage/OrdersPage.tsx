@@ -4,33 +4,44 @@ import { Tab, Tabs } from '@material-ui/core';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 
 import {
-  ordersFetchAsync,
-  selectOrders
-} from './ordersPageActions';
+  fetchOrdersAsync,
+  selectOrders,
+  selectTotal
+} from '../../reducers/order/order';
+
 import { OrdersTable } from '../ordersTable/OrdersTable';
+
 import './ordersPage.scss';
 
 export function OrdersPage() {
   const dispatch = useAppDispatch();
+
+  const total = useAppSelector(selectTotal);
   const orders = useAppSelector(selectOrders);
 
+  const [tab, setTab] = useState(0);
+
   useEffect(() => {
-    dispatch(ordersFetchAsync());
-  }, []);
+    console.log('dispatch(fetchOrdersAsync())');
+    dispatch(fetchOrdersAsync())
+  }, [dispatch]);
 
   console.log('OrdersPage', orders);
 
-  const handleChange = () => {};
+  const handleChange = (x: any) => {
+    console.log(x);
+    setTab(x);
+  };
 
   return (
-    <div>
+    <div className={'OrdersPage'}>
       <div>
-        <span>Orders</span>
+        <span className={'page-title'}>ORDERS</span>
         <div>
-          <span>Total orders: <strong>$ TOTAL</strong> USD</span>
+          <span className={'order-total'}>Total orders: <strong>${total}</strong> <span>USD</span></span>
         </div>
         <div>
-          <Tabs className="Tabs" value={0} onChange={handleChange} aria-label="simple tabs">
+          <Tabs className="Tabs" value={tab} onChange={handleChange} aria-label="simple tabs">
             <Tab label="All" />
             <Tab label="Shipped" />
           </Tabs>

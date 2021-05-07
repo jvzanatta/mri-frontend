@@ -1,50 +1,82 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { DataGrid, GridRowsProp, GridRowData, GridColDef } from '@material-ui/data-grid';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { OrdersTableRow } from './OrdersTableRow';
+import { OrdersTableHead } from './OrdersTableHead';
 
 import { Order } from '../../interfaces/order';
 
-/* <FontAwesomeIcon icon={["far", "ellipsis-v"]} /> */
+type TableOrder = 'asc' | 'desc';
+
 interface Props {
   orders: Order[];
 }
 
 export function OrdersTable(props: Props) {
-  const dispatch = useAppDispatch();
-  const [rows, setRows] = useState<GridRowData[]>([]);
+  const [tableOrder, setOrder] = useState<TableOrder>('asc');
+  const [orderBy, setOrderBy] = useState('id');
 
+  const page = 0;
+  const rowsPerPage = 10;
 
-  const mapOrderToRow = (order: Order): GridRowData => {
-    return {
-      id: order.orderNumber,
-      col1: order.orderNumber,
-      col2: order.shippingDetails.date.toDateString(),
-      col3: order.customer.address.line1,
-      col4: order.orderDetails.value
-    };
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
+    const isAsc = orderBy === property && tableOrder === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
-  useEffect(() => {
-    const newRows = props.orders.map(mapOrderToRow);
-    setRows(newRows);
-  }, [props.orders]);
-
-  console.log('OrdersTable props', props);
-  console.log('OrdersTable rows', rows);
-
-  const columns: GridColDef[] = [
-    { field: 'col1', headerName: 'ORDER NUMBER & DATE', width: 300 },
-    { field: 'col2', headerName: 'SHIPPING STATUS', width: 300 },
-    { field: 'col3', headerName: 'CUSTOMER ADDRESS', width: 300 },
-    { field: 'col4', headerName: 'ORDER VALUE', width: 300 },
-  ];
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.orders.length - page * rowsPerPage);
 
   return (
-    <div className='OrdersTable'>
-      <DataGrid rows={rows} columns={columns} autoHeight checkboxSelection pageSize={10} />
+    <div className={'OrdersTable'}>
+        <TableContainer>
+          <Table
+            className={'.table'}
+            aria-labelledby="tableTitle"
+            size={'medium'}
+            aria-label="enhanced table"
+          >
+            <OrdersTableHead
+              // classes={classes}
+              // numSelected={selected.length}
+              tableOrder={tableOrder}
+              orderBy={orderBy}
+              // onSelectAllClick={() => {}}
+              onRequestSort={handleRequestSort}
+              rowCount={props.orders.length}
+            />
+            <TableBody>
+              { //stableSort(props.orders, getComparator(tableOrder, orderBy))
+              props.orders
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((order, index) => {
+                  return (
+                    <OrdersTableRow key={index} order={order} position={index} />
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={props.orders.length}
+          rowsPerPage={rowsPerPage}
+          page={0}
+          onChangePage={() => {}}
+          onChangeRowsPerPage={() => {}}
+        />
     </div>
   );
 }
