@@ -1,10 +1,9 @@
-@use "@material/checkbox"; // Required only for data table with row selection.
-@use "@material/icon-button"; // Required only for data table with column sorting.
-@use "@material/data-table/data-table";
+@import "./sass/fonts.scss";
+@import "./sass/colors.scss";
 
 
 .App {
-  background-color: #F4F2FF;
+  background-color: $background;
   padding: 50px 100px;
   height: 100%;
 }

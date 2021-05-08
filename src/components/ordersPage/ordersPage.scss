@@ -1,4 +1,4 @@
-
+@import '/src/sass/colors.scss';
   
 .MuiTabs-root {
   .MuiTab-root {
@@ -8,46 +8,60 @@
 }
 
 .OrdersPage {
-  .PrivateTabIndicator-colorSecondary-3 {
-    background-color: #25213B
+  .MuiTabs-indicator {
+    background-color: $purple-dark
   }
 
   .Tabs {
-    border-bottom: 1px solid #C6C2DE;
+    border-bottom: 1px solid $purple-lighter;
     margin-bottom: 20px;
+
+    .Mui-selected {
+      .MuiTab-wrapper {
+        color: $purple-dark;
+      }
+    }
+    
+    .MuiTab-wrapper {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      
+      color: $purple-light;
+    }
+    
   }
 
   .page-title {
-    // font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     
     letter-spacing: 0.1em;
     text-transform: uppercase;
         
-    color: #6E6893;
+    color: $purple-light;
   }
 
   .order-total {
     position: absolute;
     right: 105px;
     
-    // font-family: Inter;
-    font-style: normal;
     font-size: 14px;
     line-height: 17px;
+    font-weight: 500;
         
-    color: #6E6893;
+    color: $purple-light;
 
     strong {
-      font-size: 16px;
-      color: #4A4AFF;
+      font-size: 18px;
+      color: $purple;
+      font-weight: 700;
     }
 
     span {
       font-size: 16px;
+      font-weight: 400;
     }
   }
 }
