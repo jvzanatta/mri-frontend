@@ -47,7 +47,6 @@ export const fetchOrdersAsync = createAsyncThunk(
   async () => {
     const response = await fetchOrders();
     const jsonResponse = await response.json();
-    // console.log('fetchOrdersAsync', jsonResponse);
     return jsonResponse;
   }
 );
@@ -60,12 +59,9 @@ export const orderSlice = createSlice({
     builder
       .addCase(fetchOrdersAsync.pending, (state) => {
         state.isLoading = true;
-        // console.log('isLoading', true);
       })
       .addCase(fetchOrdersAsync.fulfilled, (state, action) => {
-        // console.log('isLoading', false);
         state.isLoading = false;
-        // console.log('action', action);
         state.orders = action.payload.map(formatOrder);
         const total = state.orders.reduce(calculateTotal, 0);
         state.ordersTotal = total.toString();

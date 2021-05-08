@@ -22,15 +22,11 @@ export function OrdersPage() {
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
-    console.log('dispatch(fetchOrdersAsync())');
     dispatch(fetchOrdersAsync())
   }, [dispatch]);
 
-  console.log('OrdersPage', orders);
-
-  const handleChange = (x: any) => {
-    console.log(x);
-    setTab(x);
+  const handleChange = (event: React.ChangeEvent<{}>, tab: number) => {
+    setTab(tab);
   };
 
   return (

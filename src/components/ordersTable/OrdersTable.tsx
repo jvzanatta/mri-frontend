@@ -2,76 +2,90 @@ import React, { useState } from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 
 import { OrdersTableRow } from './OrdersTableRow';
 import { OrdersTableHead } from './OrdersTableHead';
 
 import { Order } from '../../interfaces/order';
 
-type TableOrder = 'asc' | 'desc';
+import './ordersTable.scss';
+
+type ColumnOrder = 'asc' | 'desc';
 
 interface Props {
   orders: Order[];
 }
 
+const sortOrders = (orders: Order[], orderBy: string, columnOrder: ColumnOrder) => {
+  const isAsc = columnOrder === 'asc';
+
+  return orders.sort((a: Order, b: Order) => {
+    let comparison = 0;
+    switch (orderBy) {
+      case 'id':
+        comparison = Number(a.orderNumber) > Number(b.orderNumber) ? 1 : -1;
+        break;
+      case 'shipping':
+        comparison = a.status > b.status ? 1 : -1;
+        break;
+      case 'address':
+        comparison = a.customer.address.line1 > b.customer.address.line1 ? 1 : -1;
+        break;
+      case 'value':
+        comparison = Number(a.orderDetails.value) > Number(b.orderDetails.value) ? 1 : -1;
+        break;
+    }
+
+    return isAsc ? comparison : comparison * -1;
+  });
+}
+
 export function OrdersTable(props: Props) {
-  const [tableOrder, setOrder] = useState<TableOrder>('asc');
+  const [columnOrder, setColumnOrder] = useState<ColumnOrder>('asc');
   const [orderBy, setOrderBy] = useState('id');
 
   const page = 0;
   const rowsPerPage = 10;
 
+  const { orders } = props;
+
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
-    const isAsc = orderBy === property && tableOrder === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && columnOrder === 'asc';
+    setColumnOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.orders.length - page * rowsPerPage);
 
   return (
     <div className={'OrdersTable'}>
         <TableContainer>
           <Table
             className={'.table'}
-            aria-labelledby="tableTitle"
+            aria-labelledby='tableTitle'
             size={'medium'}
-            aria-label="enhanced table"
+            aria-label='enhanced table'
           >
             <OrdersTableHead
-              // classes={classes}
-              // numSelected={selected.length}
-              tableOrder={tableOrder}
+              columnOrder={columnOrder}
               orderBy={orderBy}
-              // onSelectAllClick={() => {}}
               onRequestSort={handleRequestSort}
-              rowCount={props.orders.length}
             />
             <TableBody>
-              { //stableSort(props.orders, getComparator(tableOrder, orderBy))
-              props.orders
+              {sortOrders([...orders], orderBy, columnOrder)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((order, index) => {
                   return (
                     <OrdersTableRow key={index} order={order} position={index} />
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={props.orders.length}
+          component='div'
+          count={orders.length}
           rowsPerPage={rowsPerPage}
           page={0}
           onChangePage={() => {}}
