@@ -7,7 +7,7 @@ import {
   fetchOrdersAsync,
   selectOrders,
   selectTotal
-} from '../../reducers/order/order';
+} from '../../reducers/order';
 
 import OrdersTable from '../ordersTable/OrdersTable';
 
