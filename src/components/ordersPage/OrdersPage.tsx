@@ -9,7 +9,7 @@ import {
   selectTotal
 } from '../../reducers/order/order';
 
-import { OrdersTable } from '../ordersTable/OrdersTable';
+import OrdersTable from '../ordersTable/OrdersTable';
 
 import './ordersPage.scss';
 

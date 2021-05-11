@@ -32,7 +32,9 @@ export function OrdersTableRow(props: Props) {
         date,
         value
       },
-      shippingDetails,
+      shippingDetails: {
+        date: shippingDate
+      },
       customer: {
         address: {
           line1,
@@ -63,7 +65,7 @@ export function OrdersTableRow(props: Props) {
       </TableCell>
       <TableCell component="th" id={labelId} scope="row">
         <div className="order-id"># {orderNumber}</div>
-        <div className="order-date">Ordered: {moment(date).format('MMM. D, YYYY')}</div>
+        <div className="order-date">Ordered: {moment.utc(Date.parse(date)).format('MMM. D, YYYY')}</div>
       </TableCell>
       <TableCell>
         <div className="shipping-status">
@@ -74,11 +76,11 @@ export function OrdersTableRow(props: Props) {
           />
         </div>
         <div className="shipping-date">
-          Updated: {moment(shippingDetails.date).format('DD/MMM/YYYY').toUpperCase()}
+          Updated: {moment.utc(Date.parse(shippingDate)).format('DD/MMM/YYYY').toUpperCase()}
         </div>
       </TableCell>
       <TableCell>
-        <div className="address-line">{line1} {line2}</div>
+        <div className="address-line" data-testid="address-line">{line1} {line2}</div>
         <div className="address-line">{city}, {state} {zip}</div>
       </TableCell>
       <TableCell align="right">

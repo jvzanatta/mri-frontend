@@ -1,9 +1,13 @@
 @import "./sass/fonts.scss";
 @import "./sass/colors.scss";
 
-
 .App {
-  background-color: $background;
   padding: 50px 100px;
+  height: 100%;
+}
+
+html, body {
+  background-color: $background;
+  font-family: 'Inter';
   height: 100%;
 }

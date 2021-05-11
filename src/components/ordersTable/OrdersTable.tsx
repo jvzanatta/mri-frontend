@@ -14,7 +14,7 @@ import './ordersTable.scss';
 
 type ColumnOrder = 'asc' | 'desc';
 
-interface Props {
+export interface Props {
   orders: Order[];
 }
 
@@ -42,7 +42,7 @@ const sortOrders = (orders: Order[], orderBy: string, columnOrder: ColumnOrder) 
   });
 }
 
-export function OrdersTable(props: Props) {
+export default function OrdersTable(props: Props) {
   const [columnOrder, setColumnOrder] = useState<ColumnOrder>('asc');
   const [orderBy, setOrderBy] = useState('id');
 
@@ -52,9 +52,10 @@ export function OrdersTable(props: Props) {
   const { orders } = props;
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
-    const isAsc = orderBy === property && columnOrder === 'asc';
-    setColumnOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = columnOrder === 'asc' && orderBy === property;
+    
     setOrderBy(property);
+    setColumnOrder(isAsc ? 'desc' : 'asc');
   };
 
   return (
